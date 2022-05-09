@@ -1,5 +1,22 @@
 <template>
     <div>
+        <div class="lang_dropdown">
+            <div
+                class="language_selected"
+                type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                test
+            </div>
+            <ul class="dropdown-menu language_list" aria-labelledby="dropdownMenuButton1" role="menu">
+                <li>
+                    12
+                </li>
+                <li>
+                    1232
+                </li>
+            </ul>
+        </div>
         <p class="test_class">{{ $t('Basty bet') }}</p>
         <p class="online_converter">
             {{ $t('online converter') }}
@@ -41,7 +58,8 @@ justify-content: space-between;align-items: center;">
 
 <script>
 import Alfavit from './alphabit'
-const { createWorker } = require('tesseract.js');
+
+const {createWorker} = require('tesseract.js');
 
 export default {
     name: "index",
@@ -72,13 +90,13 @@ export default {
         this.changeVybrano(false, this.str);
         let text = this.SiteLang == 'kz' ? "256 кб-тан кіші файлды таңдаңыз" : "256 kb-tan kışı faildy tañdañyz";
         document.getElementById('inputfile')
-            .addEventListener('change', function() {
+            .addEventListener('change', function () {
                 console.log(this.files[0])
                 if (this.files[0].size > 256000) {
                     alert(text)
                 } else {
-                    var fr=new FileReader();
-                    fr.onload=function(){
+                    var fr = new FileReader();
+                    fr.onload = function () {
                         self.str = fr.result
                         self.translate(self.str)
                     }
@@ -105,14 +123,14 @@ export default {
                 await worker.load();
                 await worker.loadLanguage(lang);
                 await worker.initialize(lang);
-                const { data: { text } } = await worker.recognize(e.target.files[0]);
+                const {data: {text}} = await worker.recognize(e.target.files[0]);
                 this.str = text;
                 this.new_str = this.$func.translate(text, this.SiteLang)
                 this.wait_please = false;
                 await worker.terminate();
             })();
         }
-      }
+    }
 }
 </script>
 
@@ -171,9 +189,11 @@ p.file_text {
     line-height: 36px;
     color: #018122;
 }
+
 .choose_file input {
     display: none;
 }
+
 .online_converter__info {
     font-size: 18px;
     line-height: 27px;

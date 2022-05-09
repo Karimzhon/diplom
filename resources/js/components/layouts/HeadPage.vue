@@ -2,18 +2,30 @@
     <div class="header_container">
         <header class="container header">
             <img src="/images/Logo800.png" alt="test">
-            <div class="language">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ langs[SiteLang] }}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <language-switcher v-slot="{ links }" tag="ul" active-class="my-custom-class">
-                        <li class="lang_select" :class="link.activeClass" v-for="link in links" :key="link.langIndex">
-                            <router-link :to="link.url + 'home/'">{{ link.langName }}</router-link>
+            <language-switcher
+                v-slot="{ links }"
+                active-class="router-link-exact-active">
+                <div class="lang_dropdown">
+                    <div
+                        class="language_selected"
+                        type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {{ langs[SiteLang] }}
+                    </div>
+                    <ul class="dropdown-menu language_list" aria-labelledby="dropdownMenuButton1" role="menu">
+                        <li v-for="link in links" :key="link.langIndex">
+                            <router-link
+                                :to="link.url"
+                                :class="link.activeClass"
+                                exact-active-class=""
+                                class="language_item">
+                                {{ link.langName }}
+                            </router-link>
                         </li>
-                    </language-switcher>
+                    </ul>
                 </div>
-            </div>
+            </language-switcher>
         </header>
     </div>
 </template>
@@ -32,7 +44,6 @@ export default {
     },
     computed: {
         SiteLang() {
-            console.log('hello')
             return this.$i18n.locale
         }
     },
