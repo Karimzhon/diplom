@@ -164,7 +164,7 @@ p.file_text {
     padding: 20px;
     margin-bottom: 30px;
     border-radius: 5px;
-    border-color: #b1b1b1;
+    border: 1px solid #b1b1b1;
 }
 
 .result {

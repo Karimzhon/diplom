@@ -4,7 +4,7 @@
         {{ $t('qazaqsha alfavit') }}
     </p>
     <div class="alfavit_list">
-        <li class="alfavit_item" v-for="(item, key) in alfavit" :key="key">
+        <li class="alfavit_item" v-for="(item, key) in new_alphavit" :key="key">
             {{ item.name }}
             <div class="poka_none">
                 <span class="play_music" @click="playMuz(item.music)"><img src="/images/sound.svg" style="width: 28px;" alt="X"></span>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: "alphabit",
     props: {
@@ -22,138 +23,21 @@ export default {
     },
     data() {
         return {
-            alfavit: [
-                {
-                    name: 'A a',
-                    music: '/muz/a.mp3'
-                },
-                {
-                    name: 'Ä ä',
-                    music: '/muz/a2.mp3'
-                },
-                {
-                    name: 'B b',
-                    music: '/muz/b.mp3'
-                },
-                {
-                    name: 'D d',
-                    music: '/muz/d.mp3'
-                },
-                {
-                    name: 'E e',
-                    music: '/muz/e.mp3'
-                },
-                {
-                    name: 'F f',
-                    music: '/muz/f.mp3'
-                },
-                {
-                    name: 'G g',
-                    music: '/muz/g.mp3'
-                },
-                {
-                    name: 'Ğ ğ',
-                    music: '/muz/g2.mp3'
-                },
-                {
-                    name: 'H h',
-                    music: '/muz/h.mp3'
-                },
-                {
-                    name: 'İ i',
-                    music: '/muz/i.mp3'
-                },
-                {
-                    name: 'I ı',
-                    music: '/muz/i2.mp3'
-                },
-                {
-                    name: 'J j',
-                    music: '/muz/j.mp3'
-                },
-                {
-                    name: 'K k',
-                    music: '/muz/k.mp3'
-                },
-                {
-                    name: 'L l',
-                    music: '/muz/l.mp3'
-                },
-                {
-                    name: 'M m',
-                    music: '/muz/m.mp3'
-                },
-                {
-                    name: 'N n',
-                    music: '/muz/n.mp3'
-                },
-                {
-                    name: 'Ñ ñ',
-                    music: '/muz/n2.mp3'
-                },
-                {
-                    name: 'O o',
-                    music: '/muz/o.mp3'
-                },
-                {
-                    name: 'Ö ö',
-                    music: '/muz/o2.mp3'
-                },
-                {
-                    name: 'P p',
-                    music: '/muz/p.mp3'
-                },
-                {
-                    name: 'Q q',
-                    music: '/muz/q.mp3'
-                },
-                {
-                    name: 'R r',
-                    music: '/muz/r.mp3'
-                },
-                {
-                    name: 'S s',
-                    music: '/muz/s.mp3'
-                },
-                {
-                    name: 'Ş ş',
-                    music: '/muz/s2.mp3'
-                },
-                {
-                    name: 'T t',
-                    music: '/muz/t.mp3'
-                },
-                {
-                    name: 'U u',
-                    music: '/muz/u.mp3'
-                },
-                {
-                    name: 'Ū ū',
-                    music: '/muz/u2.mp3'
-                },
-                {
-                    name: 'Ü ü',
-                    music: '/muz/u3.mp3'
-                },
-                {
-                    name: 'V v',
-                    music: '/muz/v.mp3'
-                },
-                {
-                    name: 'Y y',
-                    music: '/muz/y.mp3'
-                },
-                {
-                    name: 'Z z',
-                    music: '/muz/z.mp3'
-                }
-            ]
+            new_alphavit: [],
         }
+    },
+    created() {
+        this.getAlphavit();
     },
     methods: {
         playMuz(val) {
             const audio = new Audio(val);
             audio.play();
+        },
+        getAlphavit() {
+            axios.get('/api/letters').then(response => {
+                this.new_alphavit = response.data.items
+            })
         }
     }
 }
