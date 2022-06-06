@@ -19,4 +19,5 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::get('letters', [\App\Http\Controllers\Api\LettersController::class, 'index'])->name('api.letter.index');
+Route::get('voices', [\App\Http\Controllers\Api\VoiceController::class, 'index'])->name('api.voices.index');
 

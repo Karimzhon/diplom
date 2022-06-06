@@ -1,22 +1,5 @@
 <template>
     <div>
-        <div class="lang_dropdown">
-            <div
-                class="language_selected"
-                type="button" id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                test
-            </div>
-            <ul class="dropdown-menu language_list" aria-labelledby="dropdownMenuButton1" role="menu">
-                <li>
-                    12
-                </li>
-                <li>
-                    1232
-                </li>
-            </ul>
-        </div>
         <p class="test_class">{{ $t('Basty bet') }}</p>
         <p class="online_converter">
             {{ $t('online converter') }}
@@ -48,6 +31,7 @@ justify-content: space-between;align-items: center;">
             <textarea rows="10" @input="translate(str)" v-model="str"></textarea>
             <div class="result">{{ new_str }}</div>
         </div>
+        <p @click="getVoice()">Slushat</p>
         <div class="online_converter__info">
             {{ $t('online converter info') }}
         </div>
@@ -58,6 +42,7 @@ justify-content: space-between;align-items: center;">
 
 <script>
 import Alfavit from './alphabit'
+import axios from "axios";
 
 const {createWorker} = require('tesseract.js');
 
@@ -108,6 +93,32 @@ export default {
     methods: {
         translate(value) {
             this.new_str = this.$func.translate(value, this.SiteLang)
+        },
+        getVoice() {
+            axios.get('/api/voices').then(response => {
+                let slova = this.new_str.split(' ');
+                let new_arr = [];
+                for (let i = 0; i < slova.length; i++) {
+                    let test = response.data.items.filter(a =>
+                        a.code === slova[i]
+                    );
+                    console.log(test)
+                    test.length !== 0 ? new_arr.push(test[0]) : '';
+                }
+                this.playVoice(new_arr)
+            })
+        },
+        playVoice(arr) {
+            console.log(arr)
+            let my_time = 0;
+            arr.forEach((el) => {
+                my_time = my_time + el.code.length * 250;
+                setTimeout(() => {
+                    const audio = new Audio(el.music);
+                    audio.play();
+                }, my_time)
+                console.log(my_time)
+            })
         },
         changeVybrano(bo, val) {
             this.vybrano = bo
