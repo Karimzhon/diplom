@@ -29,9 +29,10 @@ justify-content: space-between;align-items: center;">
         </div>
         <div class="search">
             <textarea rows="10" @input="translate(str)" v-model="str"></textarea>
-            <div class="result">{{ new_str }}</div>
+            <div class="result">{{ new_str }}
+                <img class="result_sound" v-show="new_str" src="/images/sound.svg" @click="getVoice()" alt="">
+            </div>
         </div>
-        <p @click="getVoice()">Slushat</p>
         <div class="online_converter__info">
             {{ $t('online converter info') }}
         </div>
@@ -187,6 +188,15 @@ p.file_text {
     padding: 20px;
     border-radius: 5px;
     text-align: left;
+    position: relative;
+}
+
+.result_sound {
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    width: 25px;
+    right: 10px;
 }
 
 .search textarea:focus-visible {
