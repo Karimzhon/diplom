@@ -97,7 +97,7 @@ export default {
         },
         getVoice() {
             axios.get('/api/voices').then(response => {
-                let slova = this.new_str.split(' ');
+                let slova = this.SiteLang === 'kz' ? this.new_str.split(' ') : this.str.split(' ');
                 let new_arr = [];
                 for (let i = 0; i < slova.length; i++) {
                     let test = response.data.items.filter(a =>
